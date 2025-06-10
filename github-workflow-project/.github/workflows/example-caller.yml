@@ -1,0 +1,12 @@
+name: Example Caller
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-reusable-workflow:
+    uses: ./.github/workflows/reusable-workflow.yml
+    secrets:
+      REQUIRED_SECRET: ${{ secrets.REQUIRED_SECRET }}

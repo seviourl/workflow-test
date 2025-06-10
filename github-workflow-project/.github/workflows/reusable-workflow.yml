@@ -1,0 +1,27 @@
+name: Check Required Secret
+
+on:
+  workflow_call:
+    secrets:
+      REQUIRED_SECRET:
+        required: true
+        description: 'A required secret to check'
+
+jobs:
+  check-secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Required Secret
+        run: |
+          if [ -n "${{ secrets.REQUIRED_SECRET }}" ]; then
+            echo "✅ Required secret received."
+          else
+            echo "❌ Required secret not received."
+            exit 1
+          fi
+        env:
+          REQUIRED_SECRET: ${{ secrets.REQUIRED_SECRET }}
+      
+      - name: Success message
+        if: success()
+        run: echo "🎉 Secret validation completed successfully"
